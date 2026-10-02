@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "X-ID Converter",
+  "version": "2.0.0",
+  "minimum_chrome_version": "116",
+  "description": "Convertit les X-ID base 36 et les identifiants entiers, depuis une popup ou une sélection.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": [
+    "contextMenus",
+    "offscreen",
+    "clipboardWrite",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "X-ID ↔ entier",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+# X-ID Converter — Chrome MV3
+
+Extension légère, sans build ni dépendance. Conversion automatique entre un entier décimal et `x` + sa représentation base 36. Calculs avec BigInt pour conserver la précision des grands identifiants.
+
+## Installation
+
+1. Décompresser le ZIP dans un dossier que tu conserveras sur ton ordinateur.
+2. Ouvrir `chrome://extensions` dans Chrome (version 116 minimum).
+3. Activer **Mode développeur** en haut à droite.
+4. Cliquer **Charger l'extension non empaquetée** et sélectionner le dossier `xid-converter` contenant `manifest.json`.
+5. Épingler l'extension depuis le bouton Extensions de Chrome.
+
+## Utilisation
+
+- **Popup** : coller un entier ou un X-ID. La conversion est immédiate. Cliquer **Copier le résultat**, ou appuyer sur Entrée dans le champ.
+- **Clic droit** : sélectionner uniquement l'identifiant sur une page, puis **Convertir X-ID ↔ entier et copier**. Le résultat est copié automatiquement. Un badge **OK** apparaît sur l'extension ; **!** signale une erreur, détaillée dans la popup. La dernière conversion par clic droit reste visible dans la popup pour la session Chrome courante.
+- Les espaces autour de l'identifiant et les lettres majuscules sont acceptés. Les URL, préfixes JSON, signes et sélections de plusieurs identifiants sont rejetés.
+
+Exemples : `x9yazc2` ↔ `601814882` ; `x9yazc6` ↔ `601814886`.
+
+## Permissions et confidentialité
+
+Tout fonctionne localement, sans serveur, requête réseau, télémétrie ni accès général aux pages. L'extension ne lit pas le presse-papiers.
+
+- `contextMenus` : menu sur le texte sélectionné.
+- `clipboardWrite` : écriture du résultat dans le presse-papiers.
+- `offscreen` : document masqué nécessaire à la copie depuis le service worker.
+- `storage` : dernière conversion et éventuelle erreur, en mémoire de session uniquement.
+
+Chrome n'affiche pas nécessairement le menu d'une extension dans certaines surfaces internes, notamment les DevTools. Dans ce cas, utiliser la popup. Le service worker utilise le document hors écran et `execCommand('copy')`, conformément au modèle de l'exemple offscreen-clipboard de Chrome.
+
+## Structure
+
+```
+manifest.json
+icons/                           icon-16/32/48/128.png, icon-source.png (original à redimensionner)
+src/
+  background/service-worker.js   menu contextuel, badge, orchestration de la copie
+  popup/                         popup.html, popup.js, popup.css
+  offscreen/                     document hors écran pour la copie (offscreen.html, offscreen.js)
+  lib/converter.js               conversion X-ID ↔ entier (partagée, testée)
+tests/                           tests Node (node --test)
+```
+
+## Développement et vérification
+
+`npm test` (Node.js 18+) lance les tests de conversion, sans installation préalable.
+
+Vérification manuelle après installation : sélectionner `x9yazc2` dans une page web, déclencher le menu puis coller dans un champ : attendu `601814882`. Refaire avec `601814886` : attendu `x9yazc6`. Sélectionner `bonjour!` : attendu badge `!` et message dans la popup. Vérifier aussi la conversion et la copie dans la popup.
+
+Les tests automatiques couvrent la conversion. La copie et le menu doivent être vérifiés dans Chrome avec l'extension chargée.
+
+Documentation :
+- https://developer.chrome.com/docs/extensions/reference/api/contextMenus
+- https://developer.chrome.com/docs/extensions/reference/api/offscreen
+- https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/functional-samples/cookbook.offscreen-clipboard

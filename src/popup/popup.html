@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>X-ID Converter</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+  <header><h1>X-ID <span>↔</span> entier</h1><p>Colle un identifiant, récupère l’autre format.</p></header>
+  <label for="input">Identifiant</label>
+  <input id="input" placeholder="x9yazc2 ou 601814882" autocomplete="off" spellcheck="false" maxlength="256" autofocus>
+  <section><span id="label">Résultat</span><output id="result" aria-live="polite">—</output></section>
+  <button id="copy" disabled>Copier le résultat</button>
+  <p id="status" role="status"></p>
+  <footer>Sélectionne aussi un ID sur une page puis fais un clic droit → Convertir X-ID ↔ entier et copier.</footer>
+  <script type="module" src="popup.js"></script>
+</body></html>
