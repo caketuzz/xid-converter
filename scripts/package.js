@@ -19,7 +19,7 @@ const baseUrl = args.find(arg => arg.startsWith("--base-url="))?.slice("--base-u
 
 // Liste blanche : seul ce que Chrome charge entre dans le paquet.
 // Exclus de fait : tests/, scripts/, README.md, package.json, .git*, icons/icon-source.png, clés, dist/.
-const INCLUDE = ["manifest.json", "src", "icons/icon-16.png", "icons/icon-32.png", "icons/icon-48.png", "icons/icon-128.png"];
+const INCLUDE = ["manifest.json", "LICENSE", "src", "icons/icon-16.png", "icons/icon-32.png", "icons/icon-48.png", "icons/icon-128.png"];
 const IGNORED = [/(^|\/)\.DS_Store$/, /(^|\/)\./, /\.test\.js$/, /\.map$/];
 
 function collect(path) {

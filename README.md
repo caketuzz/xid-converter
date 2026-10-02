@@ -54,7 +54,7 @@ npm run package                                    # + dist/xid-converter-<versi
 npm run package:crx -- --base-url=https://hôte/xid # + .crx signé et update.xml
 ```
 
-Les deux commandes lancent les tests d'abord. Le paquet est construit à partir d'une liste blanche (`manifest.json`, `src/`, `icons/icon-{16,32,48,128}.png`), avec rejet des fichiers cachés (`.DS_Store`…). Le script vérifie que chaque fichier référencé par le manifest est présent, et que les versions de `package.json` et `manifest.json` concordent. Exclus : `tests/`, `scripts/`, `README.md`, `package.json`, `icons/icon-source.png`, `keys/`, `dist/`.
+Les deux commandes lancent les tests d'abord. Le paquet est construit à partir d'une liste blanche (`manifest.json`, `LICENSE`, `src/`, `icons/icon-{16,32,48,128}.png`), avec rejet des fichiers cachés (`.DS_Store`…). Le script vérifie que chaque fichier référencé par le manifest est présent, et que les versions de `package.json` et `manifest.json` concordent. Exclus : `tests/`, `scripts/`, `README.md`, `package.json`, `icons/icon-source.png`, `keys/`, `dist/`.
 
 **Chrome Web Store** (recommandé) : envoyer le ZIP dans le [Developer Dashboard](https://chrome.google.com/webstore/devconsole). Choisir la visibilité *Privé* pour restreindre l'extension au domaine Google Workspace, ou *Non répertorié* pour l'accès par lien. Les mises à jour sont automatiques : incrémenter `version` dans `manifest.json` et `package.json`, puis renvoyer le ZIP.
 
