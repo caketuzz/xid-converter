@@ -4,6 +4,10 @@ All notable changes to this project are documented here. Format based on [Keep a
 
 ## [Unreleased]
 
+### Changed
+- Extension UI switched from French to English: popup, context menu, tooltip, error messages, manifest description and toolbar title.
+- Store screenshots and promo tiles regenerated in English.
+
 ### Added
 - Author, homepage and short name in the manifest; version, author and GitHub link in the popup footer.
 - `NOTICE`, shipped with the extension alongside `LICENSE`.

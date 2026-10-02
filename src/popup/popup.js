@@ -11,7 +11,7 @@ function update() {
   copy.disabled = true;
   status.textContent = "";
   output.textContent = "—";
-  label.textContent = "Résultat";
+  label.textContent = "Result";
   if (!input.value.trim()) return;
   try {
     const converted = convert(input.value);
@@ -23,17 +23,17 @@ function update() {
 }
 input.addEventListener("input", update);
 copy.addEventListener("click", async () => {
-  try {await navigator.clipboard.writeText(current); status.textContent = "Copié !";}
-  catch {status.textContent = "Copie impossible. Sélectionne le résultat pour le copier.";}
+  try {await navigator.clipboard.writeText(current); status.textContent = "Copied!";}
+  catch {status.textContent = "Could not copy. Select the result to copy it.";}
 });
 input.addEventListener("keydown", event => {if (event.key === "Enter" && current) copy.click();});
 async function init() {
   const {last, error} = await chrome.storage.session.get(["last", "error"]);
   if (last) {input.value = last.input; update();}
   if (error) status.textContent = error;
-  else if (last?.copied) status.textContent = "Dernière sélection : résultat déjà copié.";
+  else if (last?.copied) status.textContent = "Last selection: result already copied.";
   await chrome.action.setBadgeText({text: ""});
   input.focus();
   input.select();
 }
-init().catch(() => {status.textContent = "Historique indisponible.";});
+init().catch(() => {status.textContent = "History unavailable.";});

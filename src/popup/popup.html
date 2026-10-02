@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>X-ID Converter</title><link rel="stylesheet" href="popup.css"></head>
 <body>
-  <header><h1>X-ID <span>↔</span> entier</h1><p>Colle un identifiant, récupère l’autre format.</p></header>
-  <label for="input">Identifiant</label>
-  <input id="input" placeholder="x9yazc2 ou 601814882" autocomplete="off" spellcheck="false" maxlength="256" autofocus>
-  <section><span id="label">Résultat</span><output id="result" aria-live="polite">—</output></section>
-  <button id="copy" disabled>Copier le résultat</button>
+  <header><h1>X-ID <span>↔</span> integer</h1><p>Paste an ID, get the other format.</p></header>
+  <label for="input">ID</label>
+  <input id="input" placeholder="x9yazc2 or 601814882" autocomplete="off" spellcheck="false" maxlength="256" autofocus>
+  <section><span id="label">Result</span><output id="result" aria-live="polite">—</output></section>
+  <button id="copy" disabled>Copy result</button>
   <p id="status" role="status"></p>
   <footer>
-    <p>Sélectionne aussi un ID sur une page puis fais un clic droit → Convertir X-ID ↔ entier et copier.</p>
+    <p>You can also select an ID on a page, right-click → Convert X-ID ↔ integer and copy.</p>
     <p class="meta"><span id="version">X-ID Converter</span> · Emmanuel Steinitz · <a href="https://github.com/caketuzz/xid-converter" target="_blank" rel="noopener">GitHub</a></p>
   </footer>
   <script type="module" src="popup.js"></script>

@@ -8,18 +8,16 @@ Lightweight Chrome extension that converts between a decimal integer ID and its 
 
 🇫🇷 [Version française plus bas](#version-française)
 
-![Right-click conversion: the result is copied and shown next to the ID](store/screenshot-1-clic-droit.png)
+![Right-click conversion: the result is copied and shown next to the ID](store/screenshot-1-right-click.png)
 
 | Popup | In input fields |
 | --- | --- |
-| ![Popup](store/screenshot-2-popup.png) | ![Input field](store/screenshot-3-champ.png) |
-
-> The extension UI is in French.
+| ![Popup](store/screenshot-2-popup.png) | ![Input field](store/screenshot-3-input-field.png) |
 
 ## Features
 
-- **Popup**: paste an integer or an X-ID, the conversion is instant. Click **Copier le résultat** or press Enter.
-- **Right-click**: select just the ID on a page, then **Convertir X-ID ↔ entier et copier**. The result is copied to the clipboard and shown in a tooltip at the top-right of the selection (click it or scroll to dismiss). The toolbar badge shows **OK**, or **!** on error, with details in the popup. The last right-click conversion stays visible in the popup for the current Chrome session.
+- **Popup**: paste an integer or an X-ID, the conversion is instant. Click **Copy result** or press Enter.
+- **Right-click**: select just the ID on a page, then **Convert X-ID ↔ integer and copy**. The result is copied to the clipboard and shown in a tooltip at the top-right of the selection (click it or scroll to dismiss). The toolbar badge shows **OK**, or **!** on error, with details in the popup. The last right-click conversion stays visible in the popup for the current Chrome session.
 - Surrounding whitespace and uppercase letters are accepted. URLs, JSON prefixes, signs and multi-ID selections are rejected.
 
 Examples: `x9yazc2` ↔ `601814882`; `x9yazc6` ↔ `601814886`.
@@ -43,7 +41,7 @@ There are no automatic updates in this mode: replace the folder with a newer rel
 
 ### Without developer mode
 
-Outside developer mode, Chrome only installs extensions from the Chrome Web Store, or through enterprise policy on managed devices. A `.crx` dragged into `chrome://extensions` is rejected. See [Packaging](#packaging) and [Publishing](#publishing-on-the-chrome-web-store).
+Outside developer mode, Chrome only installs extensions from the Chrome Web Store, or through enterprise policy on managed devices. A `.crx` dragged into `chrome://extensions` is rejected. See [Packaging](#packaging).
 
 ## Permissions and privacy
 
@@ -89,14 +87,6 @@ All three commands run the tests first. The package is built from an allowlist (
 
 The signing key `keys/xid-converter.pem` is created on the first `package:crx` (path configurable with `CRX_KEY`). It determines the extension ID: back it up outside the repository (it is git-ignored). Losing it means redeploying under a new ID.
 
-## Publishing on the Chrome Web Store
-
-1. `npm run package`, then upload `dist/xid-converter-<version>.zip` in the [Developer Dashboard](https://chrome.google.com/webstore/devconsole) (one-time $5 developer registration).
-2. Fill in the listing from [store/listing.md](store/listing.md): descriptions, category, permission justifications, privacy answers.
-3. Images are in [store/](store/): three 1280×800 screenshots, the 440×280 small promo tile and the 1400×560 marquee. Regenerate them with `npm run store-assets` (headless Chrome, built from the real popup, tooltip and icon files).
-4. Choose visibility: *Private* (Google Workspace domain only), *Unlisted* (anyone with the link) or *Public*.
-5. Updates: bump `version` in `manifest.json` and `package.json`, add a [CHANGELOG](CHANGELOG.md) entry, then upload the new ZIP. Installed copies update automatically.
-
 ## Development
 
 `npm test` (Node.js 18+) runs the conversion tests, with nothing to install.
@@ -119,12 +109,14 @@ References:
 
 ## Version française
 
+L'interface de l'extension est en anglais.
+
 Extension Chrome légère de conversion entre un identifiant entier décimal et sa forme X-ID : `x` suivi de la représentation base 36 (`601814882` ↔ `x9yazc2`). Fonctionne depuis la popup ou par clic droit sur un identifiant sélectionné. Sans build ni dépendance, calculs en BigInt pour conserver la précision des grands identifiants.
 
 ### Utilisation
 
-- **Popup** : coller un entier ou un X-ID. La conversion est immédiate. Cliquer **Copier le résultat**, ou appuyer sur Entrée dans le champ.
-- **Clic droit** : sélectionner uniquement l'identifiant sur une page, puis **Convertir X-ID ↔ entier et copier**. Le résultat est copié automatiquement et une info-bulle l'affiche en haut à droite de la sélection (clic dessus ou défilement pour la fermer). Un badge **OK** apparaît sur l'extension ; **!** signale une erreur, détaillée dans la popup. La dernière conversion par clic droit reste visible dans la popup pour la session Chrome courante.
+- **Popup** : coller un entier ou un X-ID. La conversion est immédiate. Cliquer **Copy result**, ou appuyer sur Entrée dans le champ.
+- **Clic droit** : sélectionner uniquement l'identifiant sur une page, puis **Convert X-ID ↔ integer and copy**. Le résultat est copié automatiquement et une info-bulle l'affiche en haut à droite de la sélection (clic dessus ou défilement pour la fermer). Un badge **OK** apparaît sur l'extension ; **!** signale une erreur, détaillée dans la popup. La dernière conversion par clic droit reste visible dans la popup pour la session Chrome courante.
 - Les espaces autour de l'identifiant et les lettres majuscules sont acceptés. Les URL, préfixes JSON, signes et sélections de plusieurs identifiants sont rejetés.
 
 Exemples : `x9yazc2` ↔ `601814882` ; `x9yazc6` ↔ `601814886`.
@@ -149,18 +141,16 @@ Tout fonctionne localement, sans serveur, requête réseau, télémétrie ni acc
 
 Chrome n'affiche pas nécessairement le menu d'une extension dans certaines surfaces internes, notamment les DevTools : utiliser la popup. L'info-bulle ne peut pas s'afficher sur les pages `chrome://`, le Web Store ou les iframes d'une autre origine ; la copie et le badge fonctionnent quand même.
 
-### Packaging et publication
+### Packaging
 
 ```
 npm run build                                      # dist/xid-converter/ (mode développeur)
 npm run package                                    # + dist/xid-converter-<version>.zip
 npm run package:crx -- --base-url=https://hôte/xid # + .crx signé et update.xml
-npm run store-assets                               # régénère les visuels de store/
 ```
 
 Les commandes de packaging lancent les tests d'abord, et le paquet est construit à partir d'une liste blanche (voir [Packaging](#packaging) pour le détail des fichiers inclus et exclus).
 
-- **Chrome Web Store** : envoyer le ZIP dans le [Developer Dashboard](https://chrome.google.com/webstore/devconsole), puis remplir la fiche avec les textes de [store/listing.md](store/listing.md) et les visuels de [store/](store/). Visibilité *Privé* (domaine Google Workspace), *Non répertorié* (accès par lien) ou *Public*. Pour une mise à jour : incrémenter `version` dans `manifest.json` et `package.json`, compléter le [CHANGELOG](CHANGELOG.md), puis renvoyer le ZIP.
 - **Auto-hébergé, par politique** : héberger `dist/*.crx` et `dist/update.xml` à l'URL passée en `--base-url`, puis déployer la politique `ExtensionInstallForcelist` avec la valeur `<ID>;<base-url>/update.xml` affichée par le script. Uniquement sur des postes gérés (MDM sur macOS, domaine/Intune sur Windows, Chrome Browser Cloud Management).
 - La clé de signature `keys/xid-converter.pem` est créée au premier `package:crx` (chemin modifiable via `CRX_KEY`). Elle détermine l'ID de l'extension : la sauvegarder hors du dépôt (elle est ignorée par git).
 

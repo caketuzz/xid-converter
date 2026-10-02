@@ -36,15 +36,15 @@ function popup({input, label, result, status}) {
 
 // Paires calculées par le convertisseur : les captures restent exactes.
 const rows = [
-  ["x9yazc2", "Présentation produit — version longue", "12:04"],
-  ["x9yazc6", "Interview : les coulisses du tournage", "11:52"],
-  ["x9yb1kq", "Tutoriel : premiers pas", "11:37"],
-  ["x9yb2m0", "Résumé du match", "10:58"],
-  ["x9yb3c4", "Bande-annonce officielle", "10:21"],
+  ["x9yazc2", "Product overview — extended cut", "12:04"],
+  ["x9yazc6", "Interview: behind the scenes", "11:52"],
+  ["x9yb1kq", "Tutorial: getting started", "11:37"],
+  ["x9yb2m0", "Match highlights", "10:58"],
+  ["x9yb3c4", "Official trailer", "10:21"],
 ].map(([xid, ...rest]) => [xid, convert(xid).result, ...rest]);
 
 function browser({badge = "", body, after = ""}) {
-  return `<!doctype html><html lang="fr"><meta charset="utf-8"><style>
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><style>
     * {box-sizing: border-box;} html, body {margin: 0; height: 100%;}
     body {font: 14px/1.4 system-ui, -apple-system, sans-serif; color: #1f2937; background: #f3f4f6; overflow: hidden;}
     .tabs {height: 40px; background: #dfe3e8; display: flex; align-items: end; padding: 0 12px;}
@@ -64,7 +64,7 @@ function browser({badge = "", body, after = ""}) {
     .caption {position: absolute; left: 40px; bottom: 32px; background: #131b2a; color: #e9eef8; padding: 14px 22px; border-radius: 12px; font-size: 20px; font-weight: 600;}
     .caption span {color: #8aafff;}
   </style><body>
-    <div class="tabs"><div class="tab">Vidéos — Console d'administration</div></div>
+    <div class="tabs"><div class="tab">Videos — Admin console</div></div>
     <div class="bar"><span>←</span><span>→</span><span>↻</span><div class="url">admin.example.com/videos</div>
       <div class="ext"><img src="${icon32}" alt="">${badge ? `<span class="badge">${badge}</span>` : ""}</div></div>
     <main>${body}</main>${after}
@@ -72,30 +72,30 @@ function browser({badge = "", body, after = ""}) {
 }
 
 function videosPage({search = ""} = {}) {
-  return `<h1>Vidéos</h1><p class="sub">Exemple de page interne affichant des identifiants.</p>
-    <div class="search"><input id="search" value="${search}" placeholder="Rechercher par ID"><button>Rechercher</button></div>
-    <table><tr><th>X-ID</th><th>ID</th><th>Titre</th><th>Mise à jour</th></tr>
+  return `<h1>Videos</h1><p class="sub">Sample internal page listing IDs.</p>
+    <div class="search"><input id="search" value="${search}" placeholder="Search by ID"><button>Search</button></div>
+    <table><tr><th>X-ID</th><th>ID</th><th>Title</th><th>Updated</th></tr>
     ${rows.map(([xid, id, title, time], i) => `<tr><td><code id="x${i}">${xid}</code></td><td><code>${id}</code></td><td>${title}</td><td>${time}</td></tr>`).join("")}</table>`;
 }
 
 const select = `const select = el => {const r = document.createRange(); r.selectNodeContents(el); getSelection().removeAllRanges(); getSelection().addRange(r);};`;
 
 const shots = {
-  "screenshot-1-clic-droit.png": [1280, 800, browser({
+  "screenshot-1-right-click.png": [1280, 800, browser({
     badge: "OK",
     body: videosPage(),
-    after: `<div class="caption">Clic droit sur un ID <span>→</span> converti, copié et affiché à côté</div>
+    after: `<div class="caption">Right-click an ID <span>→</span> converted, copied and shown next to it</div>
       <script>${tooltip}${select} select(document.getElementById("x0")); showTooltip("601814882", true);</script>`,
   })],
   "screenshot-2-popup.png": [1280, 800, browser({
     body: videosPage(),
-    after: `${popup({input: "x9yazc2", label: "Entier", result: "601814882", status: "Copié !"})}
-      <div class="caption">Popup <span>:</span> colle un X-ID ou un entier, la conversion est immédiate</div>`,
+    after: `${popup({input: "x9yazc2", label: "Integer", result: "601814882", status: "Copied!"})}
+      <div class="caption">Popup <span>·</span> paste an X-ID or an integer, converted instantly</div>`,
   })],
-  "screenshot-3-champ.png": [1280, 800, browser({
+  "screenshot-3-input-field.png": [1280, 800, browser({
     badge: "OK",
     body: videosPage({search: "601814886"}),
-    after: `<div class="caption">Fonctionne aussi dans les champs de saisie <span>·</span> entier → X-ID</div>
+    after: `<div class="caption">Works in input fields too <span>·</span> integer → X-ID</div>
       <script>${tooltip} const field = document.getElementById("search"); field.focus(); field.select(); showTooltip("x9yazc6", true);</script>`,
   })],
 };
@@ -109,7 +109,7 @@ function promo(width, height) {
     img {width: ${110 * scale}px; height: ${110 * scale}px;}
     h1 {font-size: ${34 * scale}px; margin: 0 0 ${8 * scale}px;} h1 span {color: #8aafff;}
     p {margin: 0; font: ${17 * scale}px ui-monospace, monospace; color: #a7b4cb;}
-  </style><body><img src="${icon128}" alt=""><div><h1>X-ID <span>↔</span> entier</h1><p>x9yazc2 ⇄ 601814882</p></div></body>`;
+  </style><body><img src="${icon128}" alt=""><div><h1>X-ID <span>↔</span> integer</h1><p>x9yazc2 ⇄ 601814882</p></div></body>`;
 }
 shots["promo-small-440x280.png"] = [440, 280, promo(440, 280)];
 shots["promo-marquee-1400x560.png"] = [1400, 560, promo(1400, 560)];

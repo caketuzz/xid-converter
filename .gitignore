@@ -5,3 +5,4 @@ dist/
 keys/
 *.pem
 *.crx
+*.local.md

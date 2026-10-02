@@ -31,7 +31,7 @@ export function showTooltip(text, ok) {
   const tip = shadow.querySelector(".tip");
   if (ok) {
     tip.textContent = text + " ";
-    tip.append(Object.assign(document.createElement("span"), {textContent: "copié"}));
+    tip.append(Object.assign(document.createElement("span"), {textContent: "copied"}));
   } else {
     tip.textContent = text;
     tip.classList.add("error");
