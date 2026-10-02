@@ -11,8 +11,10 @@
     "128": "icons/icon-128.png"
   },
   "permissions": [
+    "activeTab",
     "contextMenus",
     "offscreen",
+    "scripting",
     "clipboardWrite",
     "storage"
   ],

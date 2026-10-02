@@ -13,7 +13,7 @@ Extension légère, sans build ni dépendance. Conversion automatique entre un e
 ## Utilisation
 
 - **Popup** : coller un entier ou un X-ID. La conversion est immédiate. Cliquer **Copier le résultat**, ou appuyer sur Entrée dans le champ.
-- **Clic droit** : sélectionner uniquement l'identifiant sur une page, puis **Convertir X-ID ↔ entier et copier**. Le résultat est copié automatiquement. Un badge **OK** apparaît sur l'extension ; **!** signale une erreur, détaillée dans la popup. La dernière conversion par clic droit reste visible dans la popup pour la session Chrome courante.
+- **Clic droit** : sélectionner uniquement l'identifiant sur une page, puis **Convertir X-ID ↔ entier et copier**. Le résultat est copié automatiquement et une info-bulle l'affiche en haut à droite de la sélection (clic dessus ou défilement pour la fermer). Un badge **OK** apparaît sur l'extension ; **!** signale une erreur, détaillée dans la popup. La dernière conversion par clic droit reste visible dans la popup pour la session Chrome courante.
 - Les espaces autour de l'identifiant et les lettres majuscules sont acceptés. Les URL, préfixes JSON, signes et sélections de plusieurs identifiants sont rejetés.
 
 Exemples : `x9yazc2` ↔ `601814882` ; `x9yazc6` ↔ `601814886`.
@@ -22,6 +22,7 @@ Exemples : `x9yazc2` ↔ `601814882` ; `x9yazc6` ↔ `601814886`.
 
 Tout fonctionne localement, sans serveur, requête réseau, télémétrie ni accès général aux pages. L'extension ne lit pas le presse-papiers.
 
+- `activeTab` + `scripting` : affichage de l'info-bulle dans l'onglet où le menu vient d'être utilisé, uniquement à ce moment-là (aucun accès permanent aux pages, aucun avertissement à l'installation).
 - `contextMenus` : menu sur le texte sélectionné.
 - `clipboardWrite` : écriture du résultat dans le presse-papiers.
 - `offscreen` : document masqué nécessaire à la copie depuis le service worker.
@@ -37,6 +38,7 @@ icons/                           icon-16/32/48/128.png, icon-source.png (origina
 src/
   background/service-worker.js   menu contextuel, badge, orchestration de la copie
   popup/                         popup.html, popup.js, popup.css
+  content/tooltip.js             info-bulle injectée dans la page après un clic droit
   offscreen/                     document hors écran pour la copie (offscreen.html, offscreen.js)
   lib/converter.js               conversion X-ID ↔ entier (partagée, testée)
 tests/                           tests Node (node --test)
