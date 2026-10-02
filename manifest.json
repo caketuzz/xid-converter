@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "X-ID Converter",
   "short_name": "X-ID Conv",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "minimum_chrome_version": "116",
   "description": "Converts base-36 X-IDs to integer IDs and back, from a popup or a right-click on selected text.",
   "author": {

@@ -1,6 +1,6 @@
 {
   "name": "xid-converter",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Extension Chrome (MV3) : conversion X-ID base 36 ↔ identifiant entier, depuis une popup ou par clic droit.",
   "private": true,
   "type": "module",

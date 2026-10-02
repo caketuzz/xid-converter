@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here. Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [2.2.0] - 2026-10-02
 
 ### Changed
 - Extension UI switched from French to English: popup, context menu, tooltip, error messages, manifest description and toolbar title.
