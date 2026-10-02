@@ -1,10 +1,11 @@
-// Construit les paquets d'installation hors mode développeur, sans dépendance.
-//   node scripts/package.js                    → dist/xid-converter-<version>.zip (Chrome Web Store)
+// Construit les paquets d'installation, sans dépendance.
+//   node scripts/package.js --unpacked         → dist/xid-converter/ seul (à charger en mode développeur)
+//   node scripts/package.js                    → + dist/xid-converter-<version>.zip (Chrome Web Store)
 //   node scripts/package.js --crx [--base-url=https://hôte/chemin]
 //                                              → + .crx signé et update.xml (installation par politique)
 import {execFileSync} from "node:child_process";
 import {createHash, createPrivateKey, createPublicKey, generateKeyPairSync, sign} from "node:crypto";
-import {existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync} from "node:fs";
+import {cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync} from "node:fs";
 import {dirname, join, relative} from "node:path";
 import {fileURLToPath} from "node:url";
 
@@ -12,6 +13,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = join(root, "dist");
 const keyPath = process.env.CRX_KEY || join(root, "keys", "xid-converter.pem");
 const args = process.argv.slice(2);
+const unpackedOnly = args.includes("--unpacked");
 const withCrx = args.includes("--crx");
 const baseUrl = args.find(arg => arg.startsWith("--base-url="))?.slice("--base-url=".length).replace(/\/$/, "");
 
@@ -42,13 +44,19 @@ if (missing.length) throw new Error(`Référencé par manifest.json mais absent 
 const pkgVersion = JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version;
 if (pkgVersion && pkgVersion !== manifest.version) throw new Error(`Version package.json (${pkgVersion}) ≠ manifest.json (${manifest.version})`);
 
+// Dossier non empaqueté : chargeable en mode développeur et base du ZIP.
+const unpacked = join(dist, "xid-converter");
+rmSync(unpacked, {recursive: true, force: true});
+for (const file of files) cpSync(join(root, file), join(unpacked, file));
+console.log(`DIR  ${relative(root, unpacked)}/ (${files.length} fichiers)`);
+for (const file of files) console.log(`     ${file}`);
+if (unpackedOnly) process.exit(0);
+
 const name = `xid-converter-${manifest.version}`;
 const zipPath = join(dist, `${name}.zip`);
-mkdirSync(dist, {recursive: true});
 rmSync(zipPath, {force: true});
-execFileSync("zip", ["-q", "-X", "-9", zipPath, ...files], {cwd: root});
-console.log(`ZIP  ${relative(root, zipPath)} (${files.length} fichiers)`);
-for (const file of files) console.log(`     ${file}`);
+execFileSync("zip", ["-q", "-X", "-9", zipPath, ...files], {cwd: unpacked});
+console.log(`ZIP  ${relative(root, zipPath)}`);
 
 if (withCrx) {
   if (!existsSync(keyPath)) {

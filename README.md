@@ -4,10 +4,10 @@ Extension légère, sans build ni dépendance. Conversion automatique entre un e
 
 ## Installation
 
-1. Cloner ou copier ce dossier sur ton ordinateur (mode développeur ; pour une installation sans ce mode, voir *Packaging*).
+1. Lancer `npm run build` : crée `dist/xid-converter/`, qui ne contient que les fichiers de l'extension (ni clés, ni tests, ni sources annexes). Pour une installation sans mode développeur, voir *Packaging*.
 2. Ouvrir `chrome://extensions` dans Chrome (version 116 minimum).
 3. Activer **Mode développeur** en haut à droite.
-4. Cliquer **Charger l'extension non empaquetée** et sélectionner le dossier `xid-converter` contenant `manifest.json`.
+4. Cliquer **Charger l'extension non empaquetée** et sélectionner le dossier `dist/xid-converter`. Après une modification, relancer `npm run build` puis cliquer sur ↻ dans `chrome://extensions`.
 5. Épingler l'extension depuis le bouton Extensions de Chrome.
 
 ## Utilisation
@@ -47,7 +47,8 @@ tests/                           tests Node (node --test)
 Chrome n'installe une extension hors mode développeur que depuis le Chrome Web Store, ou par politique d'entreprise. Un `.crx` glissé dans `chrome://extensions` est refusé.
 
 ```
-npm run package                                    # dist/xid-converter-<version>.zip
+npm run build                                      # dist/xid-converter/ (mode développeur)
+npm run package                                    # + dist/xid-converter-<version>.zip
 npm run package:crx -- --base-url=https://hôte/xid # + .crx signé et update.xml
 ```
 
