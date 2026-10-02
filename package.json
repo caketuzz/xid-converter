@@ -30,6 +30,8 @@
     "build": "npm test && node scripts/package.js --unpacked",
     "package": "npm test && node scripts/package.js",
     "store-assets": "node scripts/store-assets.js",
-    "package:crx": "npm test && node scripts/package.js --crx"
+    "package:crx": "npm test && node scripts/package.js --crx",
+    "preversion": "npm test",
+    "version": "node scripts/sync-version.js && git add manifest.json CHANGELOG.md"
   }
 }

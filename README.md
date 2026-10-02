@@ -1,5 +1,6 @@
 # X-ID Converter
 
+[![Build](https://github.com/caketuzz/xid-converter/actions/workflows/build.yml/badge.svg)](https://github.com/caketuzz/xid-converter/actions/workflows/build.yml)
 [![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
 [![Version](https://img.shields.io/github/manifest-json/v/caketuzz/xid-converter)](manifest.json)
 [![License](https://img.shields.io/github/license/caketuzz/xid-converter)](LICENSE)
@@ -69,7 +70,8 @@ src/
   offscreen/                     offscreen document used to copy (offscreen.html, offscreen.js)
   lib/converter.js               X-ID ↔ integer conversion (shared, tested)
 store/                           Chrome Web Store listing texts and images
-scripts/                         packaging and store-image generation
+scripts/                         packaging, version sync and store-image generation
+.github/workflows/build.yml      CI: test, ZIP artifact, GitHub Release on v* tags
 tests/                           Node tests (node --test)
 ```
 
@@ -82,6 +84,8 @@ npm run package:crx -- --base-url=https://host/xid # + signed .crx and update.xm
 ```
 
 All three commands run the tests first. The package is built from an allowlist (`manifest.json`, `LICENSE`, `NOTICE`, `src/`, `icons/icon-{16,32,48,128}.png`), and hidden files (`.DS_Store`…) are dropped. The script checks that every file referenced by the manifest is included, and that `package.json` and `manifest.json` versions match. Excluded: `tests/`, `scripts/`, `store/`, `README.md`, `PRIVACY.md`, `CHANGELOG.md`, `package.json`, `icons/icon-source.png`, `keys/`, `dist/`.
+
+GitHub Actions ([build.yml](.github/workflows/build.yml)) runs the tests and builds the ZIP on every push to `main` and every pull request (downloadable as a run artifact), and attaches it to a [GitHub Release](https://github.com/caketuzz/xid-converter/releases) for each `v*` tag.
 
 **Self-hosted, through policy**: host `dist/*.crx` and `dist/update.xml` at the URL given as `--base-url`, then deploy the `ExtensionInstallForcelist` (or `ExtensionSettings`) policy with the value `<ID>;<base-url>/update.xml` printed by the script. Chrome only applies these policies to off-store extensions on managed devices (MDM on macOS, domain/Intune on Windows, or Chrome Browser Cloud Management).
 
@@ -151,6 +155,7 @@ npm run package:crx -- --base-url=https://hôte/xid # + .crx signé et update.xm
 
 Les commandes de packaging lancent les tests d'abord, et le paquet est construit à partir d'une liste blanche (voir [Packaging](#packaging) pour le détail des fichiers inclus et exclus).
 
+- **GitHub Actions** ([build.yml](.github/workflows/build.yml)) : tests et ZIP à chaque push sur `main` et chaque pull request (artifact du run), et ZIP attaché à une [GitHub Release](https://github.com/caketuzz/xid-converter/releases) pour chaque tag `v*`.
 - **Auto-hébergé, par politique** : héberger `dist/*.crx` et `dist/update.xml` à l'URL passée en `--base-url`, puis déployer la politique `ExtensionInstallForcelist` avec la valeur `<ID>;<base-url>/update.xml` affichée par le script. Uniquement sur des postes gérés (MDM sur macOS, domaine/Intune sur Windows, Chrome Browser Cloud Management).
 - La clé de signature `keys/xid-converter.pem` est créée au premier `package:crx` (chemin modifiable via `CRX_KEY`). Elle détermine l'ID de l'extension : la sauvegarder hors du dépôt (elle est ignorée par git).
 

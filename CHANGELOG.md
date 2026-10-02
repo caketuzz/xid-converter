@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here. Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- GitHub Actions workflow: tests and ZIP artifact on every push to `main` and pull request; GitHub Release with the ZIP for each `v*` tag.
+- `npm version patch|minor|major` syncs `manifest.json` and dates the `[Unreleased]` changelog section.
+
 ## [2.2.0] - 2026-10-02
 
 ### Changed
