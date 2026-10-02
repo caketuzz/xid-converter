@@ -9,3 +9,4 @@ section {margin: 16px 0; padding: 14px; background: #1b263a; border-radius: 8px;
 output {display: block; font: 19px ui-monospace, monospace; overflow-wrap: anywhere; max-height: 150px; overflow-y: auto;}
 button {width: 100%; border: 0; border-radius: 8px; background: #a5c1ff; color: #14213a; padding: 12px; font-weight: 650; cursor: pointer;}
 button:disabled {opacity: .4; cursor: default;} #status {font-size: 12px; min-height: 18px; color: #b8cdff;} footer {border-top: 1px solid #344056; padding-top: 12px;}
+footer p {margin: 0;} footer .meta {margin-top: 8px; font-size: 11px; color: #7f8ca3;} footer a {color: #8aafff;} footer a:focus-visible {outline: 2px solid #8aafff; outline-offset: 2px;}

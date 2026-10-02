@@ -5,6 +5,7 @@ const label = document.getElementById("label");
 const copy = document.getElementById("copy");
 const status = document.getElementById("status");
 let current = "";
+document.getElementById("version").textContent = `X-ID Converter v${chrome.runtime.getManifest().version}`;
 function update() {
   current = "";
   copy.disabled = true;

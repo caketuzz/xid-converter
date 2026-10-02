@@ -1,11 +1,35 @@
 {
+  "name": "xid-converter",
+  "version": "2.1.0",
+  "description": "Extension Chrome (MV3) : conversion X-ID base 36 ↔ identifiant entier, depuis une popup ou par clic droit.",
   "private": true,
   "type": "module",
-  "version": "2.1.0",
+  "author": "Emmanuel Steinitz <manu@caketuzz.com> (https://github.com/caketuzz)",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/caketuzz/xid-converter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caketuzz/xid-converter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/caketuzz/xid-converter/issues"
+  },
+  "keywords": [
+    "chrome-extension",
+    "manifest-v3",
+    "base36",
+    "xid",
+    "converter",
+    "bigint"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "test": "node --test tests/*.test.js",
     "build": "npm test && node scripts/package.js --unpacked",
     "package": "npm test && node scripts/package.js",
+    "store-assets": "node scripts/store-assets.js",
     "package:crx": "npm test && node scripts/package.js --crx"
   }
 }
