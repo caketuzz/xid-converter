@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "X-ID Converter",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "minimum_chrome_version": "116",
   "description": "Convertit les X-ID base 36 et les identifiants entiers, depuis une popup ou une sélection.",
   "icons": {
